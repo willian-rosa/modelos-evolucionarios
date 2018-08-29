@@ -1,0 +1,127 @@
+Aluno: Willian da Rosa
+Modelos Evolucionários
+Problema 8 Rainhas
+
+====================================================
+
+
+População inicial 20
+Seção eretista: 10
+Número máximo de gerações: 100
+Sem mutação
+
+	Experimento 1:
+		Melhor indivíduo:  [2, 6, 3, 7, 4, 1, 5, 0]
+		Quant. conflitos:  0
+		Quant. de gerações:  8
+
+	Experimento 2:
+		Melhor indivíduo:  [3, 0, 7, 5, 2, 6, 1, 4]
+		Quant. conflitos:  0
+		Quant. de gerações:  8
+
+	Experimento 3:
+		Melhor indivíduo:  [3, 0, 7, 5, 2, 6, 1, 4]
+		Quant. conflitos:  0
+		Quant. de gerações:  8
+
+	Experimento 4:
+		Melhor indivíduo:  [0, 4, 7, 5, 2, 6, 1, 3]
+		Quant. conflitos:  0
+		Quant. de gerações:  2
+	
+	Experimento 5:
+		Melhor indivíduo:  [6, 4, 7, 5, 0, 3, 1, 2]
+		Quant. conflitos:  1
+		Quant. de gerações:  100
+	Experimento 6:
+		Melhor indivíduo:  [3, 7, 4, 1, 5, 2, 6, 0]
+		Quant. conflitos:  0
+		Quant. de gerações:  8
+
+
+------------------------------------------------------
+
+População inicial 60
+Seção eretista: 30
+Número máximo de gerações: 100
+Sem mutação
+	Experimento 1:
+		Melhor indivíduo:  [1, 4, 2, 0, 6, 3, 5, 7]
+		Quant. conflitos:  0
+		Quant. de gerações:  2
+
+	Experimento 2:
+		Melhor indivíduo:  [5, 7, 1, 3, 0, 2, 4, 6]
+		Quant. conflitos:  0
+		Quant. de gerações:  2
+
+	Experimento 3:
+		Melhor indivíduo:  [2, 6, 1, 3, 7, 0, 4, 5]
+		Quant. conflitos:  0
+		Quant. de gerações:  2
+
+	Experimento 4:
+		Melhor indivíduo:  [5, 1, 6, 0, 3, 7, 4, 2]
+		Quant. conflitos:  0
+		Quant. de gerações:  2
+
+	Experimento 5:
+		Melhor indivíduo:  [3, 6, 2, 7, 1, 4, 0, 5]
+		Quant. conflitos:  0
+		Quant. de gerações:  3
+
+---------------------------------------------------
+População inicial 10
+Seção eretista: 5
+Número máximo de gerações: 100
+Sem mutação
+	Experimento 1:
+		Melhor indivíduo:  [2, 6, 3, 1, 4, 7, 0, 5]
+		Quant. conflitos:  1
+		Quant. de gerações:  100
+
+	Experimento 2:
+		Melhor indivíduo:  [3, 6, 2, 5, 7, 0, 4, 1]
+		Quant. conflitos:  1
+		Quant. de gerações:  100
+
+
+	Experimento 3:
+		Melhor indivíduo:  [1, 2, 4, 6, 0, 3, 5, 7]
+		Quant. conflitos:  1
+		Quant. de gerações:  100
+
+	Experimento 4:
+		Melhor indivíduo:  [0, 5, 7, 1, 3, 6, 4, 2]
+		Quant. conflitos:  1
+		Quant. de gerações:  100
+
+	Experimento 5:
+		Melhor indivíduo:  [4, 6, 2, 5, 7, 0, 3, 1]
+		Quant. conflitos:  1
+		Quant. de gerações:  100
+
+
+Com uma população tão baixa consegui poucos resultados bons mesmo colocando 5000 gereções.
+---------------------------------------------------
+
+
+E com uma pulução maior obtive o resultado otimo nas primeiras gerações:
+
+População inicial 500
+Seção eretista: 250
+Número máximo de gerações: 100
+Sem mutação
+	Experimento 1:
+		Melhor indivíduo:  [1, 6, 0, 3, 7, 4, 2, 5]
+		Quant. conflitos:  0
+		Quant. de gerações:  1
+	Experimento 2:
+		Melhor indivíduo:  [2, 5, 7, 4, 1, 3, 6, 0]
+		Quant. conflitos:  0
+		Quant. de gerações:  1
+	Experimento 3:
+		Melhor indivíduo:  [3, 1, 6, 2, 5, 7, 4, 0]
+		Quant. conflitos:  0
+		Quant. de gerações:  1
