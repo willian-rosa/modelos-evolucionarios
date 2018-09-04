@@ -1,9 +1,9 @@
 import genetic_algorithm
 
 #configurações
-qtdCycles = 1000
-tamanhoPopulacao = 20
-qtdPares = 10
+qtdCycles = 100000
+tamanhoPopulacao = 60
+qtdPares = 30
 
 #população inicial aleatória
 individual = [0, 1, 2, 3, 4, 5, 6, 7]

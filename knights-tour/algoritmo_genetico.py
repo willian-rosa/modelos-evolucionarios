@@ -167,17 +167,34 @@ class AlgoritmoGenetico:
 
     def selecao_populacao_variavel(self, populacao:list):
 
-        #print(len(populacao))
-
         for i in populacao:
             if i['vida'] <= 0:
                 populacao.remove(i)
             else:
                 i['vida'] = i['vida'] - 1
 
-        #print(len(populacao))
+        return populacao
+
+    def ordenacao_populacao(self, populacao:list, campo_busca):
+
+        for item in range(len(populacao) - 1, 0, -1):
+            for i in range(item):
+                if populacao[i][campo_busca] < populacao[i + 1][campo_busca]:
+                    temp = populacao[i]
+                    populacao[i] = populacao[i + 1]
+                    populacao[i + 1] = temp
 
         return populacao
+
+    def selecao_elitista(self, populacao:list):
+
+        populacao = self.ordenacao_populacao(populacao, 'fitness')
+
+        tamanho_populacao = len(populacao)
+
+        corte = int(tamanho_populacao - (tamanho_populacao * self.porcentagem_reducao_populacional) / 100)
+
+        return populacao[:corte]
 
     def permutacao(self, individual1: list, individual2: list, ponto_corte):
 
@@ -309,9 +326,6 @@ class AlgoritmoGenetico:
                              vida_individuo_melhor_finess
                              )
 
-            #tempo de espera para trabalhar na proxima geração
-            #time.sleep(.5)
-
             #Diminuindo populacao
             if len(populacao) > self.limite_populacional:
                 tela.show_estado("Extinção")
@@ -349,18 +363,76 @@ class AlgoritmoGenetico:
 
         time.sleep(30)
 
+    def tecnica_selecao_elitista(self, populacao_inicial:list):
+
+        tela = Application()
+        tela.start()
+
+        tempo = 1
+
+        populacao = []
+        melhor_individuo = {}
+
+        for i in populacao_inicial:
+            individuo = self.vetor_para_objeto_populacao_variavel(i)
+            self.atribuir_expectativa_vida(individuo)
+            populacao.append(individuo)
+
+        while tempo < self.num_max_geracoes and self.melhor_fitness < 63:
+
+            # avaliacao
+            # selecao
+            # recombinacao
+
+            tela.show_geracao(tempo)
+
+            #seleção
+            tela.show_estado("Seleção")
+            populacao = self.selecao_elitista(populacao)
+
+
+            #Gerando estatisticas
+            tela.show_estado("Estatistica")
+
+            self.melhor_fitness = 0
+            pontuacao_melhor_individuo = 0
+            vida_individuo_melhor_finess = 0
+
+            for i in populacao:
+                if self.melhor_fitness < i['fitness']:
+                    self.melhor_fitness = i['fitness']
+                    vida_individuo_melhor_finess = i['vida']
+                    melhor_individuo = i
+                    pontuacao_melhor_individuo = str(i['somatorio']) + ' [' + ', '.join(str(e) for e in i['calculo_somario']) + ']'
+
+            tela.show_status(len(populacao),
+                             pontuacao_melhor_individuo,
+                             self.melhor_fitness,
+                             vida_individuo_melhor_finess
+                             )
+
+            #mutacao
+            tela.show_estado("Mutação")
+            populacao = self.mutacao(populacao)
+
+            #reprodução
+            tela.show_estado("Reprodução")
+            novos_individuos = self.recombinacao_populacao_variavel(populacao, self.percentual_recombinacao)
+
+            populacao = populacao + novos_individuos
+
+            tempo = tempo + 1
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+        tela.show_estado("Finalizado")
+        print("Fim")
+        print("Relatório:")
+        print('Individuo:', melhor_individuo)
+        print('Geração atual: ', tempo)
+        print('Tamanho população inicial: ', self.tamanho_inicial_populacao)
+        print('Número máximo gerações: ', self.num_max_geracoes)
+        print('Porcentagem de recombinação: ', self.percentual_recombinacao)
+        print('Porcentagem de mutação: ', self.percentual_mutacao)
+        print('Limite populacional: ', self.limite_populacional)
+        print('Porcentagem de redução populacional: ', self.porcentagem_reducao_populacional)
