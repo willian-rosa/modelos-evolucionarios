@@ -1,0 +1,105 @@
+Aluno: Willian da Rosa
+Modelos Evolucionários
+Problema Percurso do Cavalo
+
+====================================================
+
+Experiência fracassada.
+
+====================================================
+
+População de Tamanho Variável
+
+	Experimento 1:
+		População inicial 300
+		Número máximo gerações: 200
+		Porcentagem de recombinação: 60%
+		Porcentagem de mutação:  5%
+		Limite populacional:  5000
+		Porcentagem de redução populacional:  60%
+		Resultado: 19% do tabuleiro preenchido corretamente
+
+	Experimento 2:		
+		População inicial 5000
+		Número máximo gerações: 200
+		Porcentagem de recombinação: 80%
+		Porcentagem de mutação:  10%
+		Limite populacional:  500.000
+		Porcentagem de redução populacional:  40%
+		Resultado: indeterminado, estava demorando mais que 2 horas para rodar
+
+	Experimento 3:
+		População inicial 1000
+		Número máximo gerações: 100
+		Porcentagem de recombinação: 100%
+		Porcentagem de mutação:  15%
+		Limite populacional:  5000
+		Porcentagem de redução populacional:  50%
+		Resultado: 23% do tabuleiro preenchido corretamente
+
+	Experimento 4:
+		População inicial 1000
+		Número máximo gerações: 100
+		Porcentagem de recombinação: 100%
+		Porcentagem de mutação:  15%
+		Limite populacional:  5000
+		Porcentagem de redução populacional:  50%
+		Resultado: 24% do tabuleiro preenchido corretamente
+
+	Experimento 5:
+		População inicial 1000
+		Número máximo gerações: 100
+		Porcentagem de recombinação: 100%
+		Porcentagem de mutação:  30%
+		Limite populacional:  5000
+		Porcentagem de redução populacional:  50%
+		Resultado: 20% do tabuleiro preenchido corretamente
+
+
+
+Elitista
+	Experimento 1:
+		População inicial 1000
+		Número máximo gerações: 200
+		Porcentagem de recombinação: 100%
+		Porcentagem de mutação:  20%
+		Porcentagem de redução populacional:  50%
+		Resultado: 38% do tabuleiro preenchido corretamente
+
+	Experimento 2:
+		População inicial 1000
+		Número máximo gerações: 200
+		Porcentagem de recombinação: 100%
+		Porcentagem de mutação:  20%
+		Porcentagem de redução populacional:  50%
+		Resultado: 38% do tabuleiro preenchido corretamente
+
+	Experimento 3:
+		População inicial 2000
+		Número máximo gerações: 200
+		Porcentagem de recombinação: 100%
+		Porcentagem de mutação:  20%
+		Porcentagem de redução populacional:  50%
+		Resultado: 43% do tabuleiro preenchido corretamente
+
+	Experimento 4:
+		População inicial 2000
+		Número máximo gerações: 200
+		Porcentagem de recombinação: 100%
+		Porcentagem de mutação:  20%
+		Porcentagem de redução populacional:  50%
+		Resultado: 44% do tabuleiro preenchido corretamente
+
+
+		Geração atual:  800
+		Tamanho população inicial:  4000
+		Número máximo gerações:  800
+		Porcentagem de recombinação:  100
+		Porcentagem de mutação:  15
+		Limite populacional:  15000
+		Porcentagem de redução populacional:  50
+
+
+
+O modelo de seleçã elitista se saiu melhor, porem não conseguiu encontrar a solução otima.
+Com seleção que usa expectativa de vida, usando uma população grande tive problem do processo demorar de mais e não a convergência ficar estagnada mesmo colocando alta porcentagem de mutação.
