@@ -29,20 +29,15 @@ if tipo_ag == 'pv':
 
 elif tipo_ag == 'elitista':
     #argumentos
-    ag.tamanho_inicial_populacao = 200
-    ag.altura_maxima = 10
-    ag.num_max_geracoes = 200
+    ag.tamanho_inicial_populacao = 400
+    ag.altura_maxima = 3
+    ag.num_max_geracoes = 2000
 
-
-
-    # ag.percentual_recombinacao = 100
-    # ag.percentual_mutacao = 20
-    # ag.limite_populacional = 15000
+    ag.percentual_mutacao = 10
+    ag.percentual_recombinacao = 100
     ag.porcentagem_reducao_populacional = 50
 
     populacao_inicial = ag.gerar_populacao_inicial()
-
-    #populacao_inicial[410] = exemplo_funcional
 
     ag.tecnica_selecao_elitista(populacao_inicial)
 

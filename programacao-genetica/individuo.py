@@ -1,6 +1,10 @@
 from no import No
 import math
 
+
+import time
+
+
 class Individuo:
 
     raiz = None
@@ -68,18 +72,35 @@ class Individuo:
 
 
 
-    def fitness(self):
-        y = [0.67, 2.00, 4.00, 6.67, 10.00, 14.00, 18.67, 24.00, 30.00, 36.67]
+    def fitness(self, altura_maxima):
 
-        somatorio = 0
+        if self.altura() > altura_maxima:
+            self.resultado = 99999
+        else:
+            y = [0.67, 2.00, 4.00, 6.67, 10.00, 14.00, 18.67, 24.00, 30.00, 36.67]
 
-        for i in range(1, 11):
-            resultado_x = self._resultado_funcao(i)
-            resultado_pacial = y[i-1] - resultado_x
-            somatorio = (resultado_pacial * resultado_pacial) + somatorio
+            somatorio = 0
+
+            for i in range(1, 11):
+                resultado_x = self._resultado_funcao(i)
+                resultado_pacial = y[i-1] - resultado_x
+                somatorio = (resultado_pacial * resultado_pacial) + somatorio
 
 
-        resultado_comparacao = math.sqrt(somatorio)
+            resultado_comparacao = math.sqrt(somatorio)
 
-        self.resultado = resultado_comparacao
+            self.resultado = resultado_comparacao
+
+    def formula(self):
+
+        self._ordem_calculo = []
+
+        self.pos_ordem(self.raiz)
+
+        formula = ''
+
+        for i in self._ordem_calculo:
+            formula = formula + ' ' + str(i)
+
+        return formula
 
