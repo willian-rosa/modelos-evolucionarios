@@ -1,0 +1,141 @@
+<!-- Page Heading -->
+<div ng-controller="simular">
+
+    <h1>{{projeto.nome}}</h1>
+    <hr/>
+    
+    <div class="well">
+        <div class="row">
+            <div class="col-md-6">
+                <form ng-submit="simular(inferencia)">
+                    <div>
+                        <h3>Inferência</h3>
+                        <div class="form-group" ng-repeat="(kval, variavel) in projeto.variaveis" ng-if="kval != projeto.variavelAlvo">
+                            <label>{{variavel.nome}}: [{{variavel.universo}}]</label><br>
+                            <input type="number" placeholder="0" ng-model="inferencia[kval]" min="{{variavel._universo[0]}}" max="{{variavel._universo[1]}}" required="required" step="0.1">
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <button type="submit" class="btn btn-primary">Simular</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div ng-if="resultadoSimulador !== null">
+                    <h2>Resultado:</h2>
+                    <h3>{{resultadoSimulador}} de {{projeto.variaveis[projeto.variavelAlvo].nome}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-repeat="variavel in projeto.variaveis">
+        <h3>{{variavel.nome}}</h3>
+        <h4>Universo: [{{variavel.universo}}]</h4>
+        <br>
+        <h4>Funções de Pertinência</h4>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Termo</th>
+                    <th>Suporte</th>
+                    <th>Núcleo</th>
+                    <th>Funções</th>
+                    <th>Gráfico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="configs in variavel.configs">
+                    <td>{{configs.termo}}</td>
+                    <td>[{{configs.suporte}}]</td>
+                    <td>[{{configs.nucleo}}]</td>
+                    <td>
+                        <math>
+                            <mrow>
+                                <mo>{</mo>
+                                <mtable rowspacing="4pt" columnspacing="1em">
+                                    <mtr>
+                                        <mtd>
+                                        <mi ng-if="configs._tipo == 'esquerdo'">0, Se x &#x2265; {{configs._suporte[1]}}</mi>
+                                        <mi ng-if="configs._tipo == 'meio'">0, Se x &#x2264; {{configs._suporte[0]}} ou x &#x2265; {{configs._suporte[1]}}</mi>
+                                        <mi ng-if="configs._tipo == 'direito'">0, Se x &#x2264; {{configs._suporte[0]}}</mi>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr>
+                                        <mtd>
+                                            <mi ng-if="configs._nucleo.length == 1">1, Se x = {{configs._nucleo[0]}}</mi>
+                                            <mi ng-if="configs._nucleo.length == 2">1, Se {{configs._nucleo[0]}} &#x2264; x &#x2264; {{configs._nucleo[1]}}</mi>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr>
+                                        <mtd>
+                                            <mfrac>
+                                                <mo ng-if="configs._tipo == 'esquerdo'">{{configs._suporte[1]}} - x</mo>
+                                                <mo ng-if="configs._tipo == 'meio'">x - {{configs._suporte[0]}}</mo>
+                                                <mo ng-if="configs._tipo == 'direito'">x - {{configs._suporte[0]}}</mo>
+                                                <mrow>
+                                                    <mo ng-if="configs._tipo == 'esquerdo'">{{configs._suporte[1]}} - {{configs._nucleo[1]}}</mo>
+                                                    <mo ng-if="configs._tipo == 'meio'">{{configs._nucleo[0]}} - {{configs._suporte[0]}}</mo>
+                                                    <mo ng-if="configs._tipo == 'direito'">{{configs._nucleo[0]}} - {{configs._suporte[0]}}</mo>
+                                                </mrow>
+                                            </mfrac>
+                                            <mi ng-if="configs._tipo == 'esquerdo'">, Se {{configs._nucleo[1]}} &#x2264; x &#x2264; {{configs._suporte[1]}}</mi>
+                                            <mi ng-if="configs._tipo == 'meio'">, Se {{configs._suporte[0]}} &#x2264; x &#x2264; {{configs._nucleo[0]}}</mi>
+                                            <mi ng-if="configs._tipo == 'direito'">, Se {{configs._suporte[0]}} &#x2264; x &#x2264; {{configs._nucleo[0]}}</mi>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr ng-if="configs._tipo == 'meio'">
+                                        <mtd>
+                                            <mfrac>
+                                                <mo>{{configs._suporte[1]}} - x</mo>
+                                                <mrow>
+                                                    <mo ng-if="configs._nucleo.length == 1">{{configs._suporte[1]}} - {{configs._nucleo[0]}}</mo>
+                                                    <mo ng-if="configs._nucleo.length == 2">{{configs._suporte[1]}} - {{configs._nucleo[1]}}</mo>
+                                                </mrow>
+                                            </mfrac>
+                                            <mi ng-if="configs._nucleo.length == 1">, Se {{configs._nucleo[0]}} &#x2264; x &#x2264; {{configs._suporte[1]}}</mi>
+                                            <mi ng-if="configs._nucleo.length == 2">, Se {{configs._nucleo[1]}} &#x2264; x &#x2264; {{configs._suporte[1]}}</mi>
+                                        </mtd>
+                                    </mtr>
+                                </mtable>
+                                <mo fence="true" stretchy="true" symmetric="true"></mo>
+                            </mrow>
+                        </math>
+                        
+                        
+                    </td>
+                    <td>{{configs.termo}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr/>
+    </div>
+    
+    <div>
+        <h3>Regras</h3>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Antecedente</th>
+                    <th>Conseqüente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(kregra, regraInferencia) in projeto.regrasInferencia">
+                    <th scope="row">{{kregra+1}}</th>
+                    <td>
+                        {{concatenartRegras(regraInferencia)}}
+                    </td>
+                    <td>
+                        {{projeto.variaveis[projeto.variavelAlvo].nome}} é {{projeto.variaveis[projeto.variavelAlvo].configs[regraInferencia.consequente].termo}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<!-- Page Heading -->
+<div ng-controller="main">
+
+    <h1>Dashboard</h1>
+    <hr/>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(key, projeto) in projetos">
+                <th scope="row">{{key+1}}</th>
+                <td>{{projeto.nome}}</td>
+                <td>
+                    <a class="btn btn-success" href="#!simular/{{key}}">Simular</a>
+                    <a class="btn btn-info" href="#!projeto/{{key}}">Alterar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

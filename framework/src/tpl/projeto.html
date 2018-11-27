@@ -1,0 +1,214 @@
+<!-- Page Heading -->
+<div ng-controller="cadastro">
+    
+    <style>
+        input[type=radio] {
+            border: 0px;
+            width: 100%;
+            height: 2em;
+        }
+    </style>
+    
+    <h1>Cadastro de Projeto</h1>
+    <hr/>
+
+    <div class="well">
+        <form>
+            <div class="form-group">
+                <label for="contactName">Nome do Projeto</label>
+                <input type="text" class="form-control" id="contactName" placeholder="Sistema de ABS" ng-model="cadastro.nome">
+            </div>
+
+
+            <div>
+                <h3>Nova Variável</h3>
+                <div class="form-group">
+                    <div class="form-group col-sm-3">
+                        <label>Nome Variável</label>
+                        <input type="text" placeholder="Velocidade" ng-model="_nomeVariavel">
+                    </div>
+                    <div class="form-group">
+                        <label>Universo</label>
+                        <div class="input-append">
+                            <input type="text"  placeholder="0,100" ng-model="_nomeUniverso">
+                            <button class="btn btn-info" ng-click="cadastroVariavel(_nomeVariavel, _nomeUniverso)">Adicionar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Alvo</th>
+                                <th>Variável</th>
+                                <th>Universo</th>
+                                <th>Termo</th>
+                                <th>Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(kval, variavel) in cadastro.variaveis">
+                                <td><input type="radio" name="alvo" ng-model="cadastro.variavelAlvo" value="{{kval}}"></td>
+                                <td>{{variavel.nome}}</td>
+                                <td>{{variavel.universo}}</td>
+                                <td>
+                                    <div ng-repeat="config in variavel.configs" class="row">
+                                        <span class="col-sm-4">Termo: <b>{{config.termo}}</b></span>
+                                        <span class="col-sm-4">Suporte:  <b>[{{config.suporte}}]</b></span>
+                                        <span class="">Nucleo:  <b>[{{config.nucleo}}]</b></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>
+                                        <button
+                                            class="btn btn-info"
+                                            type="button" data-toggle="modal"
+                                            data-target="#configVariavel"
+                                            ng-click="selecionaVariavel(variavel)">
+                                                Novo Termo
+                                        </button>
+                                        <button class="btn btn-danger" ng-click="deleteVariavel(variavel)">Excluir</button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div>
+                <h3>Regras <button class="btn btn-info" type="button" data-toggle="modal" data-target="#regras">Adicionar</button></h3>
+                
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Antecedente</th>
+                            <th>Conseqüente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(kregra, regraInferencia) in cadastro.regrasInferencia">
+                            <th scope="row">{{kregra+1}}</th>
+                            <td>
+                                {{concatenartRegras(regraInferencia)}}
+                            </td>
+                            <td>
+                                {{cadastro.variaveis[cadastro.variavelAlvo].nome}} é {{cadastro.variaveis[cadastro.variavelAlvo].configs[regraInferencia.consequente].termo}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+
+            <br/>
+
+            <button type="button" class="btn btn-primary" ng-click="salvarProjeto(cadastro)">Salvar</button>
+        </form>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade " id="configVariavel" tabindex="-1" role="dialog" aria-labelledby="configVariavel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastro de Variáveis</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>Termo</label>
+                            <input type="text" class="form-control" placeholder="Baixa" ng-model="configVariavel.termo">
+                        </div>
+                        <div class="form-group">
+                            <label>Suporte</label>
+                            <input type="text" class="form-control" placeholder="0,20" ng-model="configVariavel.suporte">
+                        </div>
+                        <div class="form-group">
+                            <label>Nucleo</label>
+                            <input type="text" class="form-control" placeholder="0" ng-model="configVariavel.nucleo">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="configVariavel = {}">Fechar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cadastroConfig()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade " id="regras" tabindex="-1" role="dialog" aria-labelledby="configVariavel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastro de Regras</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="well">
+                                                
+                        <h3>Antecedente:</h3>
+                        
+                        <div class="row" ng-repeat="antecedente in cadastroNovaRegra.antecedentes">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Variável</label>
+                                    <select ng-model="antecedente.variavel">
+                                        <option ng-repeat="(kval, variavel) in cadastro.variaveis" ng-if="kval != cadastro.variavelAlvo" ng-value="kval">{{variavel.nome}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group"><br>
+                                    <label>é</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Termo</label><br>
+                                    <select ng-model="antecedente.termo">
+                                        <option ng-repeat="(kconfig, config) in cadastro.variaveis[antecedente.variavel].configs" ng-value="kconfig">{{config.termo}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3" ng-hide="cadastroNovaRegra.operador">
+                                <div class="form-group">
+                                    <label>Opções</label><br>
+                                    <button type="button" class="btn btn-primary" ng-click="setOperador(cadastroNovaRegra, 'e')">E</button>
+                                    <button type="button" class="btn btn-primary" ng-click="setOperador(cadastroNovaRegra, 'ou')">OU</button>
+                                </div>
+                            </div>
+                            <div class="col-md-3" ng-show="cadastroNovaRegra.operador && $last && cadastroNovaRegra.antecedentes.length < (cadastro.variaveis.length-1)">
+                                <div class="form-group">
+                                    <label>Opções</label><br>
+                                    <button type="button" class="btn btn-primary" ng-click="cadastroNovaRegra.antecedentes.push({})">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <h3>Conseqüente:</h3>
+                            <div>
+                                <label >
+                                {{cadastro.variaveis[cadastro.variavelAlvo].nome}} = 
+                                </label>
+                                <select  ng-model="cadastroNovaRegra.consequente">
+                                    <option ng-repeat="(kconfig, config) in cadastro.variaveis[cadastro.variavelAlvo].configs" ng-value="kconfig">{{config.termo}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="clearCadastroNovaRegra()">Fechar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cadastrarNovaRegra(cadastroNovaRegra)">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
